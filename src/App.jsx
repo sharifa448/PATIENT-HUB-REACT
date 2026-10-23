@@ -1,15 +1,16 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login';
-import Dashboard from './pages/Dashboard';
-import Appointments from './pages/Appiontments';
-import Chat from './pages/Chat';
-import FindMarketPlace from './pages/FindMarketPlace';
-import FindPharmacy from './pages/FindPharmacy';
-import MyDependents from './pages/MyDependents';
-import MyAccount from './pages/MyAccount';
-import Settings from './pages/Settings';
-import FindClinic from './pages/FindClinic';
-import FindDoctor from './pages/FindDoctor';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Appointments from "./pages/Appointments";
+import Chat from "./pages/Chat";
+import FindMarketPlace from "./pages/FindMarketPlace";
+import FindPharmacy from "./pages/FindPharmacy";
+import MyDependents from "./pages/MyDependents";
+import MyAccount from "./pages/MyAccount";
+import Settings from "./pages/Settings";
+import FindClinic from "./pages/FindClinic";
+import FindDoctor from "./pages/FindDoctor";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/appointments" element={<Appointments />} />
         <Route path="/chat" element={<Chat />} />

@@ -1,8 +1,9 @@
 import React from 'react';
-import DashboardLayout from '../Layouts/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 import { Info } from 'lucide-react';
 import DonutChart from '../components/DonutChart';
 import ChartLegend from '../components/ChartLegend';
+
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip } from 'recharts';
 
 const Dashboard = () => {
@@ -31,31 +32,36 @@ const Dashboard = () => {
   ];
 
   const healthData = [
-    { month: 'Jan', value: 60 },
-    { month: 'Feb', value: 65 },
-    { month: 'Mar', value: 62 },
-    { month: 'Apr', value: 70 },
-    { month: 'May', value: 68 },
-    { month: 'Jun', value: 75 },
-    { month: 'Jul', value: 72 },
-    { month: 'Aug', value: 78 },
-    { month: 'Sep', value: 74 },
-    { month: 'Oct', value: 80 },
-    { month: 'Nov', value: 78 },
-    { month: 'Dec', value: 100 },
+    { month: 'Jan', value: 60 }, { month: 'Feb', value: 65 },
+    { month: 'Mar', value: 62 }, { month: 'Apr', value: 70 },
+    { month: 'May', value: 68 }, { month: 'Jun', value: 75 },
+    { month: 'Jul', value: 72 }, { month: 'Aug', value: 78 },
+    { month: 'Sep', value: 74 }, { month: 'Oct', value: 80 },
+    { month: 'Nov', value: 78 }, { month: 'Dec', value: 100 },
+  ];
+
+  const symptomsData = [
+    { month: 'Jan', value: 55 }, { month: 'Feb', value: 60 },
+    { month: 'Mar', value: 58 }, { month: 'Apr', value: 65 },
+    { month: 'May', value: 62 }, { month: 'Jun', value: 70 },
+    { month: 'Jul', value: 68 }, { month: 'Aug', value: 75 },
+    { month: 'Sep', value: 72 }, { month: 'Oct', value: 78 },
+    { month: 'Nov', value: 82 }, { month: 'Dec', value: 100 },
   ];
 
   return (
     <DashboardLayout title="Dashboard">
+      {/* ✅ عنوان خوش‌آمدگویی با رنگ سفید در دارک مود */}
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Welcome To MyPatientHUB!</h1>
+        <h1 className="text-2xl font-bold text-slate-800 dark:text-white">Welcome To MyPatientHUB!</h1>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        {/* کارت ۱ */}
+        <div className="bg-white dark:bg-blue-900 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-blue-800 transition-colors">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-700">Promotion by Clinics</h3>
-            <Info className="w-5 h-5 text-gray-400" />
+            <h3 className="font-semibold text-slate-700 dark:text-white">Promotion by Clinics</h3>
+            <Info className="w-5 h-5 text-slate-400" />
           </div>
           <div className="flex flex-col md:flex-row items-center gap-4">
             <div className="w-full md:w-1/2"><DonutChart data={clinicData} /></div>
@@ -66,10 +72,11 @@ const Dashboard = () => {
           </button>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        {/* کارت ۲ */}
+        <div className="bg-white dark:bg-blue-900 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-blue-800 transition-colors">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-700">Promotion by Pharmacies</h3>
-            <Info className="w-5 h-5 text-gray-400" />
+            <h3 className="font-semibold text-slate-700 dark:text-white">Promotion by Pharmacies</h3>
+            <Info className="w-5 h-5 text-slate-400" />
           </div>
           <div className="flex flex-col md:flex-row items-center gap-4">
             <div className="w-full md:w-1/2"><DonutChart data={pharmacyData} /></div>
@@ -80,10 +87,11 @@ const Dashboard = () => {
           </button>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6">
+        {/* کارت ۳ */}
+        <div className="bg-white dark:bg-blue-900 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-blue-800 transition-colors">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-gray-700">Smart Market Usage by app</h3>
-            <Info className="w-5 h-5 text-gray-400" />
+            <h3 className="font-semibold text-slate-700 dark:text-white">Smart Market Usage by app</h3>
+            <Info className="w-5 h-5 text-slate-400" />
           </div>
           <div className="flex flex-col md:flex-row items-center gap-4">
             <div className="w-full md:w-1/2"><DonutChart data={marketData} /></div>
@@ -94,35 +102,46 @@ const Dashboard = () => {
           </button>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm p-6">
-          <h3 className="font-semibold text-gray-700 mb-2">Health Index</h3>
-          <p className="text-2xl font-bold text-gray-800 mb-4">
-            70% <span className="text-sm text-green-500">+3%</span>
-          </p>
-          <div className="h-40">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={healthData}>
-                <XAxis dataKey="month" hide />
-                <YAxis hide />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#1e293b',
-                    border: 'none',
-                    borderRadius: '8px',
-                    color: '#fff',
-                    fontSize: '12px',
-                  }}
-                  formatter={(value) => [`${value}`, 'Health']}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="value"
-                  stroke="#1e3a8a"
-                  strokeWidth={2}
-                  dot={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
+        {/* کارت ۴: Health Index + Symptoms */}
+        <div className="space-y-6">
+          <div className="bg-white dark:bg-blue-900 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-blue-800 transition-colors">
+            <h3 className="font-semibold text-slate-700 dark:text-white mb-2">Health Index</h3>
+            <p className="text-2xl font-bold text-slate-800 dark:text-white mb-4">
+              70% <span className="text-sm text-green-500">+3%</span>
+            </p>
+            <div className="h-32">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={healthData}>
+                  <XAxis dataKey="month" hide />
+                  <YAxis hide />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '12px' }}
+                    formatter={(value) => [`${value}`, 'Health']}
+                  />
+                  <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <div className="bg-white dark:bg-blue-900 rounded-xl shadow-sm p-6 border border-slate-100 dark:border-blue-800 transition-colors">
+            <h3 className="font-semibold text-slate-700 dark:text-white mb-2">Symptoms</h3>
+            <p className="text-2xl font-bold text-slate-800 dark:text-white mb-4">
+              70% <span className="text-sm text-green-500">+3%</span>
+            </p>
+            <div className="h-32">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={symptomsData}>
+                  <XAxis dataKey="month" hide />
+                  <YAxis hide />
+                  <Tooltip
+                    contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff', fontSize: '12px' }}
+                    formatter={(value) => [`${value}`, 'Symptom']}
+                  />
+                  <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
       </div>

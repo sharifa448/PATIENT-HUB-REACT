@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardLayout from '../Layouts/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 const PagePlaceholder = ({ title, description, icon: Icon }) => {
   return (
