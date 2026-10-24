@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../Layouts/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 import { Search, Pencil, Video, Phone, Send, Paperclip, Smile } from 'lucide-react';
 
 const Chat = () => {

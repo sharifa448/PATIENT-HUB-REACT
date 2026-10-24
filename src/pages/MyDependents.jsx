@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../Layouts/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 
 const MyDependents = () => {
   const [form, setForm] = useState({

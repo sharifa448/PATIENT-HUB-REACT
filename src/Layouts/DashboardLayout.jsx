@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
-import Footer from '../components/Footer'; // 👈 این خط اضافه شد
+import Footer from '../components/Footer'; 
 
 const DashboardLayout = ({ children, title }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -34,7 +34,7 @@ const DashboardLayout = ({ children, title }) => {
             {children}
           </div>
           
-          {/* 👈 فوتر اینجا قرار گرفت */}
+        
           <Footer /> 
         </main>
       </div>

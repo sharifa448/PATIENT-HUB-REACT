@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../Layouts/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 import {
   User, List, Lock, Shield, Monitor, Trash2,
   Camera, Smartphone, Check, X

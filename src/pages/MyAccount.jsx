@@ -1,5 +1,5 @@
 import React from 'react';
-import DashboardLayout from '../Layouts/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 import { Wifi, Plus, Pencil, Trash2, FileText, ArrowUp, ArrowDown, Calendar, AlertCircle, Building2, Wallet, CreditCard } from 'lucide-react';
 
 const MyAccount = () => {

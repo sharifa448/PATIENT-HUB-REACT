@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../Layouts/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 import DoctorCard from '../components/DoctorCard';
 import { doctorsData, specialties } from '../data/doctors';
 import { Search, Map, List } from 'lucide-react';

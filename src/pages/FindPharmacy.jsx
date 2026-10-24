@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DashboardLayout from '../Layouts/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 import MedicineCard from '../components/MedicineCard';
 import { medicineCards, medicineTable } from '../data/pharmacies';
 import { ChevronDown, ArrowUpDown } from 'lucide-react';
