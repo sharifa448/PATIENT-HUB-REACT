@@ -1,191 +1,307 @@
-import React, { useState } from 'react';
-import DashboardLayout from '../layouts/DashboardLayout';
-import MedicineCard from '../components/MedicineCard';
-import { medicineCards, medicineTable } from '../data/pharmacies';
-import { ChevronDown, ArrowUpDown } from 'lucide-react';
+
+import React, { useMemo, useState } from "react";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MedicineCard from "../components/MedicineCard";
+import {
+  medicineCards,
+  medicineTable,
+} from "../data/pharmacies";
+import {
+  Search,
+  X,
+  ChevronDown,
+  ArrowUpDown,
+  Pill,
+  PackageSearch,
+} from "lucide-react";
+
+const normalize = (value) =>
+  String(value ?? "").trim().toLowerCase();
 
 const FindPharmacy = () => {
-
-  const [searchTerm, setSearchTerm] = useState('');
- 
+  const [searchTerm, setSearchTerm] = useState("");
   const [entriesPerPage, setEntriesPerPage] = useState(7);
+  const [sortOrder, setSortOrder] = useState("asc");
 
- 
-  const filteredTable = medicineTable.filter((item) =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.serviceBy.toLowerCase().includes(searchTerm.toLowerCase())
+  const search = normalize(searchTerm);
+
+  const filteredCards = useMemo(() => {
+    return medicineCards.filter((item) =>
+      [
+        item.name,
+        item.pharmacy,
+        item.description,
+        item.price,
+      ].some((value) => normalize(value).includes(search))
+    );
+  }, [search]);
+
+  const filteredTable = useMemo(() => {
+    const results = medicineTable.filter((item) =>
+      [
+        item.name,
+        item.serviceBy,
+        item.category,
+        item.code,
+        item.price,
+        item.discount,
+      ].some((value) => normalize(value).includes(search))
+    );
+
+    return [...results].sort((a, b) => {
+      const result = normalize(a.name).localeCompare(
+        normalize(b.name)
+      );
+
+      return sortOrder === "asc" ? result : -result;
+    });
+  }, [search, sortOrder]);
+
+  const paginatedTable = filteredTable.slice(
+    0,
+    entriesPerPage
   );
 
-  const paginatedTable = sortedTable.slice(0, entriesPerPage);
-
-  const handleSort = (field) => {
-    if (sortBy === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(field);
-      setSortOrder('asc');
-    }
-  };
-
-  // ✅ تابع باز کردن پنجره خرید (هم برای کارت‌ها، هم برای جدول)
-  const handleBuyNow = (item) => {
-    setSelectedItem(item);
-    setPurchaseSuccess(false);
-    setIsCheckoutOpen(true);
-  };
-
-  // ✅ تابع تایید نهایی خرید
-  const handleConfirmPurchase = () => {
-    setPurchaseSuccess(true);
-    setTimeout(() => {
-      setIsCheckoutOpen(false);
-      setSelectedItem(null);
-    }, 2000);
-  };
-
   return (
-    <DashboardLayout title="Pharmacyplace">
-
-      
-      <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
-        <h1 className="text-lg font-bold text-gray-800 mb-5">
-          Search Pharmacies for Medicines
-        </h1>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {medicineCards.map((item) => (
-            <MedicineCard key={item.id} data={item} />
-          ))}
-        </div>
-      </div>
- <div className="bg-white rounded-xl shadow-sm p-6">
-
-     
-        <h2 className="text-lg font-bold text-gray-800 mb-6">
-          6 Medicine returned for the keyword Esso
-        </h2>
-
-       
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-         
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <select
-                value={entriesPerPage}
-                onChange={(e) => setEntriesPerPage(Number(e.target.value))}
-                className="appearance-none border border-gray-200 rounded-lg px-4 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 bg-white"
-              >
-                <option value={7}>7</option>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
-              </select>
-              <ChevronDown className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
-            </div>
-            <span className="text-sm text-gray-500">entries per page</span>
+    <DashboardLayout title="Find Pharmacy">
+      <main className="min-h-screen bg-gray-50/70 p-4 sm:p-6 lg:p-8">
+        <header className="mb-7 flex items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-700">
+            <Pill size={25} />
           </div>
 
-          <div className="relative w-full md:w-64">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Find Pharmacy
+            </h1>
+            <p className="mt-1 text-sm text-gray-500">
+              Search medicines and explore pharmacy listings.
+            </p>
+          </div>
+        </header>
+
+        <section className="mb-7 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-7">
+          <h2 className="text-lg font-bold text-gray-800">
+            Search Medicines
+          </h2>
+
+          <p className="mt-1 mb-5 text-sm text-gray-500">
+            Search by medicine name, pharmacy, category or ID.
+          </p>
+
+          <div className="relative">
+            <Search
+              size={20}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+            />
+
             <input
               type="search"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search..."
-              className="w-full border border-gray-200 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              onChange={(event) =>
+                setSearchTerm(event.target.value)
+              }
+              placeholder="Try Esomeprazole or Carry Medical..."
+              aria-label="Search medicines"
+              className="w-full rounded-xl border border-gray-200 bg-gray-50 py-3.5 pl-12 pr-12 text-sm outline-none focus:border-purple-500 focus:ring-4 focus:ring-purple-100"
             />
-          </div>
-        </div>
 
-        
-        <div className="hidden md:block">
-
-         
-          <div className="grid grid-cols-6 gap-4 px-4 py-3 border-b border-gray-200 text-xs font-semibold text-gray-500 uppercase">
-            <div className="flex items-center gap-1">
-              NAME <ArrowUpDown className="w-3 h-3 text-gray-300" />
-            </div>
-            <div>CATEGORY</div>
-            <div>SERVICE BY</div>
-            <div className="flex items-center gap-1">
-              DISCOUNT <ArrowUpDown className="w-3 h-3 text-gray-300" />
-            </div>
-            <div className="flex items-center gap-1">
-              PRICE <ArrowUpDown className="w-3 h-3 text-gray-300" />
-            </div>
-            <div className="flex items-center gap-1">
-              ID <ArrowUpDown className="w-3 h-3 text-gray-300" />
-               </div>
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm("")}
+                aria-label="Clear search"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-lg p-2 text-gray-500 hover:bg-gray-200"
+              >
+                <X size={17} />
+              </button>
+            )}
           </div>
 
-     
-          {paginatedTable.map((item) => (
-            <div
-              key={item.id}
-              className="grid grid-cols-6 gap-4 px-4 py-4 border-b border-gray-100 items-center text-sm hover:bg-gray-50 transition"
-            >
-             
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gray-50 rounded flex items-center justify-center flex-shrink-0">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-10 h-10 object-contain"
-                  />
-                </div>
-                <span className="font-medium text-gray-800">{item.name}</span>
-              </div>
+          <div className="mt-4 flex flex-wrap gap-2 text-sm">
+            <span className="rounded-full bg-purple-50 px-3 py-1.5 text-purple-700">
+              {filteredCards.length} medicine cards
+            </span>
 
-              
-              <div className="text-gray-500">{item.category}</div>
+            <span className="rounded-full bg-blue-50 px-3 py-1.5 text-blue-700">
+              {filteredTable.length} table results
+            </span>
+          </div>
+        </section>
 
-             
-              <div className="flex items-center gap-2">
-                <img
-                  src={item.serviceLogo}
-                  alt={item.serviceBy}
-                  className="w-10 h-10 rounded object-cover flex-shrink-0"
+        <section className="mb-7">
+          <h2 className="mb-4 text-lg font-bold text-gray-900">
+            Featured Medicines
+          </h2>
+
+          {filteredCards.length > 0 ? (
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+              {filteredCards.map((item) => (
+                <MedicineCard
+                  key={item.id}
+                  data={item}
                 />
-                <span className="font-medium text-gray-800">{item.serviceBy}</span>
-              </div>
-
-             
-              <div className="text-gray-500">{item.discount}</div>
-
-             
-              <div className="text-gray-800">{item.price} RM</div>
-
-             
-              <div className="text-gray-500">{item.code}</div>
+              ))}
             </div>
-          ))}
-
-         
-          {paginatedTable.length === 0 && (
-            <div className="text-center py-10 text-gray-400 text-sm">
-              No results found
+          ) : (
+            <div className="rounded-2xl border border-dashed bg-white px-5 py-10 text-center">
+              <PackageSearch
+                size={36}
+                className="mx-auto mb-3 text-gray-400"
+              />
+              <p className="font-semibold text-gray-800">
+                No medicines found
+              </p>
+              <button
+                type="button"
+                onClick={() => setSearchTerm("")}
+                className="mt-4 rounded-lg bg-purple-600 px-4 py-2 text-white"
+              >
+                Clear search
+              </button>
             </div>
           )}
-        </div>
+        </section>
 
-       
-        <div className="text-sm text-gray-400 mt-6 pt-4 border-t border-gray-100">
-          Showing 1 to {paginatedTable.length} of {medicineTable.length} entries
-        </div>
+        <section className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
+          <div className="border-b border-gray-100 p-5">
+            <h2 className="text-lg font-bold text-gray-900">
+              Medicine Directory
+            </h2>
+            <p className="mt-1 text-sm text-gray-500">
+              {filteredTable.length} results
+            </p>
+          </div>
 
-      </div>
+          <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
+            <label className="flex items-center gap-3 text-sm text-gray-600">
+              Show
+              <span className="relative">
+                <select
+                  value={entriesPerPage}
+                  onChange={(event) =>
+                    setEntriesPerPage(Number(event.target.value))
+                  }
+                  className="appearance-none rounded-lg border border-gray-200 bg-white py-2 pl-3 pr-9"
+                >
+                  <option value={7}>7</option>
+                  <option value={10}>10</option>
+                  <option value={20}>20</option>
+                  <option value={50}>50</option>
+                </select>
+                <ChevronDown
+                  size={15}
+                  className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2"
+                />
+              </span>
+              entries
+            </label>
 
-     
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-8 text-xs text-gray-400">
-        <div>
-          © 2026, made with ❤️ by <strong className="text-gray-700">MyPiHUB</strong> for a better web.
-        </div>
-        <div className="flex gap-6">
-          <a href="#" className="hover:text-purple-500 transition">MyPatientHUB</a>
-          <a href="#" className="hover:text-purple-500 transition">About Us</a>
-          <a href="#" className="hover:text-purple-500 transition">Blog</a>
-        </div>
-      </div>
+            <button
+              type="button"
+              onClick={() =>
+                setSortOrder((current) =>
+                  current === "asc" ? "desc" : "asc"
+                )
+              }
+              className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm hover:bg-purple-50"
+            >
+              <ArrowUpDown size={16} />
+              Sort: {sortOrder === "asc" ? "A–Z" : "Z–A"}
+            </button>
+          </div>
 
+          <div className="hidden overflow-x-auto md:block">
+            <table className="w-full min-w-[750px] text-left text-sm">
+              <thead className="bg-gray-50 text-xs uppercase text-gray-500">
+                <tr>
+                  <th className="px-5 py-4">Medicine</th>
+                  <th className="px-5 py-4">Category</th>
+                  <th className="px-5 py-4">Pharmacy</th>
+                  <th className="px-5 py-4">Discount</th>
+                  <th className="px-5 py-4">Price</th>
+                  <th className="px-5 py-4">ID</th>
+                </tr>
+              </thead>
+
+              <tbody className="divide-y divide-gray-100">
+                {paginatedTable.map((item) => (
+                  <tr key={item.id}>
+                    <td className="px-5 py-4 font-semibold">
+                      {item.name}
+                    </td>
+                    <td className="px-5 py-4">
+                      {item.category || "—"}
+                    </td>
+                    <td className="px-5 py-4">
+                      {item.serviceBy || "—"}
+                    </td>
+                    <td className="px-5 py-4">
+                      {item.discount ?? "—"}
+                    </td>
+                    <td className="px-5 py-4 font-semibold">
+                      {item.price != null
+                        ? `RM ${item.price}`
+                        : "—"}
+                    </td>
+                    <td className="px-5 py-4">
+                      {item.code || "—"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="space-y-3 p-4 md:hidden">
+            {paginatedTable.map((item) => (
+              <article
+                key={item.id}
+                className="rounded-xl border border-gray-100 p-4"
+              >
+                <h3 className="font-semibold text-gray-800">
+                  {item.name}
+                </h3>
+                <p className="mt-1 text-sm text-gray-500">
+                  {item.serviceBy}
+                </p>
+                <p className="mt-2 font-bold text-purple-700">
+                  {item.price != null
+                    ? `RM ${item.price}`
+                    : "Price unavailable"}
+                </p>
+                <p className="mt-2 text-sm text-gray-500">
+                  {item.category} · {item.code}
+                </p>
+              </article>
+            ))}
+          </div>
+
+          {paginatedTable.length === 0 && (
+            <div className="px-5 py-10 text-center">
+              <PackageSearch
+                size={32}
+                className="mx-auto mb-3 text-gray-400"
+              />
+              <p className="font-semibold text-gray-800">
+                No results found
+              </p>
+              <p className="mt-1 text-sm text-gray-500">
+                Try another keyword.
+              </p>
+            </div>
+          )}
+
+          <div className="border-t border-gray-100 px-5 py-4 text-sm text-gray-500">
+            Showing {paginatedTable.length > 0 ? 1 : 0} to{" "}
+            {paginatedTable.length} of {filteredTable.length} entries
+          </div>
+        </section>
+
+        <footer className="mt-8 pb-4 text-xs text-gray-400">
+          © 2026 MyPiHUB — Find Pharmacy
+        </footer>
+      </main>
     </DashboardLayout>
   );
 };
