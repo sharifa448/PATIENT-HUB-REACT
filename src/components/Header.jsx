@@ -1,31 +1,31 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Search, Settings, Bell, LogOut, Menu, Home, X } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import ThemeToggle from './ThemeToggle';
+import React, { useState, useEffect, useRef } from "react";
+import { Search, Settings, Bell, LogOut, Menu, Home, X } from "lucide-react";
+import { useNavigate, useLocation } from "react-router-dom";
+import ThemeToggle from "./ThemeToggle";
 
 const searchData = [
-  { name: 'Dashboard', path: '/dashboard' },
-  { name: 'Appointments', path: '/appointments' },
-  { name: 'Find Doctor', path: '/find-doctor' },
-  { name: 'Find Clinic', path: '/find-clinic' },
-  { name: 'Chat', path: '/chat' },
-  { name: 'Find MarketPlace', path: '/find-marketplace' },
-  { name: 'Find Pharmacy', path: '/find-pharmacy' },
-  { name: 'My Dependents', path: '/my-dependents' },
-  { name: 'My Account', path: '/my-account' },
-  { name: 'Settings', path: '/settings' },
+  { name: "Dashboard", path: "/dashboard" },
+  { name: "Appointments", path: "/appointments" },
+  { name: "Find Doctor", path: "/find-doctor" },
+  { name: "Find Clinic", path: "/find-clinic" },
+  { name: "Chat", path: "/chat" },
+  { name: "Find MarketPlace", path: "/find-marketplace" },
+  { name: "Find Pharmacy", path: "/find-pharmacy" },
+  { name: "My Dependents", path: "/my-dependents" },
+  { name: "My Account", path: "/my-account" },
+  { name: "Settings", path: "/settings" },
 ];
 
-const Header = ({ title = 'Dashboard', onMenuClick }) => {
+const Header = ({ title = "Dashboard", onMenuClick }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  
-  const [searchTerm, setSearchTerm] = useState('');
+
+  const [searchTerm, setSearchTerm] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const searchRef = useRef(null);
 
-  const filteredResults = searchData.filter(item =>
-    item.name.toLowerCase().trim().includes(searchTerm.toLowerCase().trim())
+  const filteredResults = searchData.filter((item) =>
+    item.name.toLowerCase().trim().includes(searchTerm.toLowerCase().trim()),
   );
 
   useEffect(() => {
@@ -34,18 +34,18 @@ const Header = ({ title = 'Dashboard', onMenuClick }) => {
         setIsSearchFocused(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   useEffect(() => {
-    setSearchTerm('');
+    setSearchTerm("");
     setIsSearchFocused(false);
   }, [location.pathname]);
 
   const handleResultClick = (path) => {
     navigate(path);
-    setSearchTerm('');
+    setSearchTerm("");
     setIsSearchFocused(false);
   };
 
@@ -71,7 +71,9 @@ const Header = ({ title = 'Dashboard', onMenuClick }) => {
             <span>/</span>
             <span>{title}</span>
           </div>
-          <h2 className="text-lg font-bold text-slate-800 dark:text-white">{title}</h2>
+          <h2 className="text-lg font-bold text-slate-800 dark:text-white">
+            {title}
+          </h2>
         </div>
       </div>
 
@@ -92,8 +94,8 @@ const Header = ({ title = 'Dashboard', onMenuClick }) => {
               className="pl-10 pr-10 py-2 border border-slate-200 dark:border-blue-800 rounded-lg text-sm bg-white dark:bg-blue-900 text-slate-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-purple-500 w-48 lg:w-64 transition-colors"
             />
             {searchTerm && (
-              <button 
-                onClick={() => setSearchTerm('')}
+              <button
+                onClick={() => setSearchTerm("")}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
               >
                 <X className="w-4 h-4" />
@@ -119,7 +121,9 @@ const Header = ({ title = 'Dashboard', onMenuClick }) => {
                 </ul>
               ) : (
                 <div className="p-4 text-center">
-                  <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">No results found</p>
+                  <p className="text-sm text-slate-600 dark:text-slate-300 font-medium">
+                    No results found
+                  </p>
                 </div>
               )}
             </div>
@@ -127,7 +131,7 @@ const Header = ({ title = 'Dashboard', onMenuClick }) => {
         </div>
 
         <button
-          onClick={() => navigate('/login')}
+          onClick={() => navigate("/login")}
           className="flex items-center gap-2 text-slate-600 dark:text-slate-300 hover:text-purple-500 text-sm font-medium transition-colors"
         >
           <LogOut className="w-4 h-4" />
@@ -136,15 +140,15 @@ const Header = ({ title = 'Dashboard', onMenuClick }) => {
 
         <ThemeToggle />
 
-        <button 
-          onClick={() => navigate('/settings')} 
+        <button
+          onClick={() => navigate("/settings")}
           className="text-slate-500 dark:text-slate-400 hover:text-purple-500 transition"
         >
           <Settings className="w-5 h-5" />
         </button>
 
         {/* ✅ دکمه زنگ که حالا فقط یه پیام ساده نشون می‌ده */}
-        <button 
+        <button
           onClick={handleBellClick}
           className="relative text-slate-500 dark:text-slate-400 hover:text-purple-500 transition p-1"
         >
