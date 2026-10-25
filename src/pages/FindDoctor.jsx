@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import DashboardLayout from '../layouts/DashboardLayout';
 import DoctorCard from '../components/DoctorCard';
+import MapView from '../components/MapView';
 import { doctorsData, specialties } from '../data/doctors';
-import { Search, Map, List } from 'lucide-react';
+import { Search, Map, List, AlertCircle } from 'lucide-react';
 
 const FindDoctor = () => {
   const [viewMode, setViewMode] = useState('list');
@@ -10,19 +11,16 @@ const FindDoctor = () => {
   const [selectedSpecialty, setSelectedSpecialty] = useState('All');
   const [sortBy, setSortBy] = useState('default');
 
- 
   const filteredDoctors = doctorsData.filter((doctor) => {
+    const term = searchTerm.toLowerCase().trim();
     const matchesSearch =
-      doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      doctor.specialty.toLowerCase().includes(searchTerm.toLowerCase());
-
+      doctor.name.toLowerCase().trim().includes(term) ||
+      doctor.specialty.toLowerCase().trim().includes(term);
     const matchesSpecialty =
       selectedSpecialty === 'All' || doctor.specialty === selectedSpecialty;
-
     return matchesSearch && matchesSpecialty;
   });
 
- 
   const sortedDoctors = [...filteredDoctors].sort((a, b) => {
     if (sortBy === 'name') return a.name.localeCompare(b.name);
     if (sortBy === 'specialty') return a.specialty.localeCompare(b.specialty);
@@ -36,7 +34,6 @@ const FindDoctor = () => {
         <p className="text-center text-sm opacity-90 mb-6">
           Search Doctors and schedule an appointment
         </p>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-w-3xl mx-auto">
           <div className="relative md:col-span-2">
             <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -80,7 +77,6 @@ const FindDoctor = () => {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <aside className="lg:col-span-1 bg-white rounded-xl shadow-sm p-5 h-fit">
           <h3 className="font-bold text-gray-700 mb-4">Filter By</h3>
-
           <div className="space-y-3">
             <div>
               <label className="text-xs text-gray-500 mb-1 block">Specialty</label>
@@ -94,33 +90,6 @@ const FindDoctor = () => {
                   <option key={i} value={s}>{s}</option>
                 ))}
               </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Gender</label>
-              <select className="w-full border rounded-lg p-2 text-sm">
-                <option>All</option>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="text-xs text-gray-500 mb-1 block">Condition</label>
-              <select className="w-full border rounded-lg p-2 text-sm">
-                <option>All</option>
-                <option>Heart</option>
-                <option>Diabetes</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="mt-6">
-            <h4 className="text-sm font-semibold text-gray-700 mb-2">Providers Who Treat</h4>
-            <div className="space-y-1 text-sm">
-              <label className="flex items-center gap-2"><input type="checkbox" /> All Ages</label>
-              <label className="flex items-center gap-2"><input type="checkbox" /> Children</label>
-              <label className="flex items-center gap-2"><input type="checkbox" /> Adults</label>
             </div>
           </div>
         </aside>
@@ -157,8 +126,18 @@ const FindDoctor = () => {
               </div>
 
               {sortedDoctors.length === 0 ? (
-                <div className="bg-white rounded-xl shadow-sm p-10 text-center">
-                  <p className="text-gray-400">هیچ دکتری یافت نشد 😔</p>
+                <div className="bg-white rounded-xl shadow-sm p-12 text-center border border-slate-100 flex flex-col items-center">
+                  <AlertCircle className="w-10 h-10 text-slate-400 mb-4" />
+                  <h3 className="text-lg font-bold text-slate-800 mb-2">No Doctors Found</h3>
+                  <p className="text-slate-500 text-sm max-w-md">
+                    We couldn't find any doctors matching "{searchTerm}".
+                  </p>
+                  <button
+                    onClick={() => { setSearchTerm(''); setSelectedSpecialty('All'); }}
+                    className="mt-4 px-6 py-2 bg-purple-100 text-purple-700 font-semibold rounded-lg hover:bg-purple-200 transition"
+                  >
+                    Clear Search
+                  </button>
                 </div>
               ) : (
                 sortedDoctors.map((doctor) => (
@@ -167,9 +146,7 @@ const FindDoctor = () => {
               )}
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-sm p-6 h-96 flex items-center justify-center">
-              <p className="text-gray-400">🗺️ نقشه به زودی اینجا قرار می‌گیرد</p>
-            </div>
+            <MapView clinics={filteredDoctors} />
           )}
         </div>
       </div>

@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-// Fix for marker icons not showing in Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
@@ -11,23 +10,22 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-// ✅ این کامپوننت جدید باعث می‌شه نقشه با هر جستجو به مقصد پرواز کنه
 const MapUpdater = ({ clinics }) => {
   const map = useMap();
 
   useEffect(() => {
-    if (clinics && clinics.length > 0) {
-      if (clinics.length === 1) {
-        // اگر فقط یک نتیجه پیدا شد، روی همون زوم کن
-        map.flyTo([clinics[0].lat, clinics[0].lng], 15, { duration: 1.5 });
+    // ✅ چک میکنیم که کلینیک‌ها وجود داشته باشن و حداقل یکی مختصات داشته باشه
+    const validClinics = clinics.filter(c => c.lat && c.lng);
+
+    if (validClinics.length > 0) {
+      if (validClinics.length === 1) {
+        map.flyTo([validClinics[0].lat, validClinics[0].lng], 14, { duration: 1.5 });
       } else {
-        // اگر چند نتیجه بود، نقشه رو طوری تنظیم کن که همه دیده بشن
-        const bounds = L.latLngBounds(clinics.map(c => [c.lat, c.lng]));
+        const bounds = L.latLngBounds(validClinics.map(c => [c.lat, c.lng]));
         map.fitBounds(bounds, { padding: [50, 50] });
       }
     } else {
-      // اگر هیچی پیدا نشد، برگرد به مرکز کابل
-      map.flyTo([34.5553, 69.2075], 11, { duration: 1.5 });
+      map.flyTo([34.5553, 69.2075], 12, { duration: 1.5 }); // اگر هیچ مختصاتی نبود، برو کابل
     }
   }, [clinics, map]);
 
@@ -35,12 +33,15 @@ const MapUpdater = ({ clinics }) => {
 };
 
 const MapView = ({ clinics }) => {
-  // ✅ مرکز پیش‌فرض نقشه رو به کابل تغییر دادم
   const defaultCenter = [34.5553, 69.2075];
+
+  // فیلتر کردن دکترهایی که مختصات دارن تا ارور ندن
+  const validClinics = clinics.filter(c => c.lat && c.lng);
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-2" style={{ height: '600px' }}>
       <MapContainer
+        key={JSON.stringify(validClinics.map(c => c.id))} // ✅ این کلید جلوگیری از ارور initialized میکنه
         center={defaultCenter}
         zoom={12}
         style={{ height: '100%', width: '100%', borderRadius: '8px' }}
@@ -50,10 +51,9 @@ const MapView = ({ clinics }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        {/* ✅ اضافه کردن MapUpdater به نقشه */}
-        <MapUpdater clinics={clinics} />
+        <MapUpdater clinics={validClinics} />
 
-        {clinics.map((clinic) => (
+        {validClinics.map((clinic) => (
           <Marker key={clinic.id} position={[clinic.lat, clinic.lng]}>
             <Popup>
               <div className="text-sm">
