@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MedicineCard from "../components/MedicineCard";
@@ -25,6 +24,7 @@ const FindPharmacy = () => {
 
   const search = normalize(searchTerm);
 
+  // Search medicine cards
   const filteredCards = useMemo(() => {
     return medicineCards.filter((item) =>
       [
@@ -36,6 +36,7 @@ const FindPharmacy = () => {
     );
   }, [search]);
 
+  // Search and sort the medicine table
   const filteredTable = useMemo(() => {
     const results = medicineTable.filter((item) =>
       [
@@ -57,39 +58,17 @@ const FindPharmacy = () => {
     });
   }, [search, sortOrder]);
 
- 
-
-  const paginatedTable = sortedTable.slice(0, entriesPerPage);
-
-  const handleSort = (field) => {
-    if (sortBy === field) {
-      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortBy(field);
-      setSortOrder('asc');
-    }
-  };
-
-  
-  const handleBuyNow = (item) => {
-    setSelectedItem(item);
-    setPurchaseSuccess(false);
-    setIsCheckoutOpen(true);
-  };
-
-
-  const handleConfirmPurchase = () => {
-    setPurchaseSuccess(true);
-    setTimeout(() => {
-      setIsCheckoutOpen(false);
-      setSelectedItem(null);
-    }, 2000);
-  };
-
+  // Pagination
+  const paginatedTable = filteredTable.slice(
+    0,
+    entriesPerPage
+  );
 
   return (
     <DashboardLayout title="Find Pharmacy">
       <main className="min-h-screen bg-gray-50/70 p-4 sm:p-6 lg:p-8">
+
+        {/* Page heading */}
         <header className="mb-7 flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-700">
             <Pill size={25} />
@@ -105,12 +84,13 @@ const FindPharmacy = () => {
           </div>
         </header>
 
+        {/* Search section */}
         <section className="mb-7 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm sm:p-7">
           <h2 className="text-lg font-bold text-gray-800">
             Search Medicines
           </h2>
 
-          <p className="mt-1 mb-5 text-sm text-gray-500">
+          <p className="mb-5 mt-1 text-sm text-gray-500">
             Search by medicine name, pharmacy, category or ID.
           </p>
 
@@ -154,6 +134,7 @@ const FindPharmacy = () => {
           </div>
         </section>
 
+        {/* Featured medicine cards */}
         <section className="mb-7">
           <h2 className="mb-4 text-lg font-bold text-gray-900">
             Featured Medicines
@@ -174,9 +155,11 @@ const FindPharmacy = () => {
                 size={36}
                 className="mx-auto mb-3 text-gray-400"
               />
+
               <p className="font-semibold text-gray-800">
                 No medicines found
               </p>
+
               <button
                 type="button"
                 onClick={() => setSearchTerm("")}
@@ -188,24 +171,30 @@ const FindPharmacy = () => {
           )}
         </section>
 
+        {/* Medicine directory */}
         <section className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
           <div className="border-b border-gray-100 p-5">
             <h2 className="text-lg font-bold text-gray-900">
               Medicine Directory
             </h2>
+
             <p className="mt-1 text-sm text-gray-500">
               {filteredTable.length} results
             </p>
           </div>
 
+          {/* Table controls */}
           <div className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center sm:justify-between">
             <label className="flex items-center gap-3 text-sm text-gray-600">
               Show
+
               <span className="relative">
                 <select
                   value={entriesPerPage}
                   onChange={(event) =>
-                    setEntriesPerPage(Number(event.target.value))
+                    setEntriesPerPage(
+                      Number(event.target.value)
+                    )
                   }
                   className="appearance-none rounded-lg border border-gray-200 bg-white py-2 pl-3 pr-9"
                 >
@@ -214,14 +203,15 @@ const FindPharmacy = () => {
                   <option value={20}>20</option>
                   <option value={50}>50</option>
                 </select>
+
                 <ChevronDown
                   size={15}
                   className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2"
                 />
               </span>
+
               entries
             </label>
-
 
             <button
               type="button"
@@ -236,9 +226,8 @@ const FindPharmacy = () => {
               Sort: {sortOrder === "asc" ? "A–Z" : "Z–A"}
             </button>
           </div>
- 
- 
 
+          {/* Desktop table */}
           <div className="hidden overflow-x-auto md:block">
             <table className="w-full min-w-[750px] text-left text-sm">
               <thead className="bg-gray-50 text-xs uppercase text-gray-500">
@@ -258,20 +247,25 @@ const FindPharmacy = () => {
                     <td className="px-5 py-4 font-semibold">
                       {item.name}
                     </td>
+
                     <td className="px-5 py-4">
                       {item.category || "—"}
                     </td>
+
                     <td className="px-5 py-4">
                       {item.serviceBy || "—"}
                     </td>
+
                     <td className="px-5 py-4">
                       {item.discount ?? "—"}
                     </td>
+
                     <td className="px-5 py-4 font-semibold">
                       {item.price != null
                         ? `RM ${item.price}`
                         : "—"}
                     </td>
+
                     <td className="px-5 py-4">
                       {item.code || "—"}
                     </td>
@@ -281,6 +275,7 @@ const FindPharmacy = () => {
             </table>
           </div>
 
+          {/* Mobile medicine cards */}
           <div className="space-y-3 p-4 md:hidden">
             {paginatedTable.map((item) => (
               <article
@@ -290,36 +285,44 @@ const FindPharmacy = () => {
                 <h3 className="font-semibold text-gray-800">
                   {item.name}
                 </h3>
+
                 <p className="mt-1 text-sm text-gray-500">
-                  {item.serviceBy}
+                  {item.serviceBy || "Pharmacy unavailable"}
                 </p>
+
                 <p className="mt-2 font-bold text-purple-700">
                   {item.price != null
                     ? `RM ${item.price}`
                     : "Price unavailable"}
                 </p>
+
                 <p className="mt-2 text-sm text-gray-500">
-                  {item.category} · {item.code}
+                  {item.category || "No category"} ·{" "}
+                  {item.code || "No ID"}
                 </p>
               </article>
             ))}
           </div>
 
+          {/* Empty table state */}
           {paginatedTable.length === 0 && (
             <div className="px-5 py-10 text-center">
               <PackageSearch
                 size={32}
                 className="mx-auto mb-3 text-gray-400"
               />
+
               <p className="font-semibold text-gray-800">
                 No results found
               </p>
+
               <p className="mt-1 text-sm text-gray-500">
                 Try another keyword.
               </p>
             </div>
           )}
 
+          {/* Results summary */}
           <div className="border-t border-gray-100 px-5 py-4 text-sm text-gray-500">
             Showing {paginatedTable.length > 0 ? 1 : 0} to{" "}
             {paginatedTable.length} of {filteredTable.length} entries
