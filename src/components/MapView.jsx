@@ -14,7 +14,7 @@ const MapUpdater = ({ clinics }) => {
   const map = useMap();
 
   useEffect(() => {
-    // ✅ چک میکنیم که کلینیک‌ها وجود داشته باشن و حداقل یکی مختصات داشته باشه
+   
     const validClinics = clinics.filter(c => c.lat && c.lng);
 
     if (validClinics.length > 0) {
@@ -35,13 +35,12 @@ const MapUpdater = ({ clinics }) => {
 const MapView = ({ clinics }) => {
   const defaultCenter = [34.5553, 69.2075];
 
-  // فیلتر کردن دکترهایی که مختصات دارن تا ارور ندن
   const validClinics = clinics.filter(c => c.lat && c.lng);
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-2" style={{ height: '600px' }}>
       <MapContainer
-        key={JSON.stringify(validClinics.map(c => c.id))} // ✅ این کلید جلوگیری از ارور initialized میکنه
+        key={JSON.stringify(validClinics.map(c => c.id))} 
         center={defaultCenter}
         zoom={12}
         style={{ height: '100%', width: '100%', borderRadius: '8px' }}

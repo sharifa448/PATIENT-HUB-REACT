@@ -57,10 +57,35 @@ const FindPharmacy = () => {
     });
   }, [search, sortOrder]);
 
-  const paginatedTable = filteredTable.slice(
-    0,
-    entriesPerPage
-  );
+ 
+
+  const paginatedTable = sortedTable.slice(0, entriesPerPage);
+
+  const handleSort = (field) => {
+    if (sortBy === field) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(field);
+      setSortOrder('asc');
+    }
+  };
+
+  
+  const handleBuyNow = (item) => {
+    setSelectedItem(item);
+    setPurchaseSuccess(false);
+    setIsCheckoutOpen(true);
+  };
+
+
+  const handleConfirmPurchase = () => {
+    setPurchaseSuccess(true);
+    setTimeout(() => {
+      setIsCheckoutOpen(false);
+      setSelectedItem(null);
+    }, 2000);
+  };
+
 
   return (
     <DashboardLayout title="Find Pharmacy">
@@ -197,6 +222,7 @@ const FindPharmacy = () => {
               entries
             </label>
 
+
             <button
               type="button"
               onClick={() =>
@@ -210,6 +236,8 @@ const FindPharmacy = () => {
               Sort: {sortOrder === "asc" ? "A–Z" : "Z–A"}
             </button>
           </div>
+ 
+ 
 
           <div className="hidden overflow-x-auto md:block">
             <table className="w-full min-w-[750px] text-left text-sm">

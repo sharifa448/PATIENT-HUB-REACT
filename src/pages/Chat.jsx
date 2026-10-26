@@ -6,10 +6,9 @@ const Chat = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [newMessage, setNewMessage] = useState('');
   
-  // ✅ استیت برای مخاطب فعال (پیش‌فرض اولی)
   const [activeContact, setActiveContact] = useState(null);
 
-  // ✅ دیتای اولیه مخاطبین
+
   const contacts = [
     { id: 1, name: 'noman khan', message: 'short message here...', time: '2:30', avatar: 'https://i.pravatar.cc/150?img=11' },
     { id: 2, name: 'ahmadi khan', message: 'Hi hope you feel better', time: '2:30', avatar: 'https://i.pravatar.cc/150?img=12' },
@@ -17,7 +16,7 @@ const Chat = () => {
     { id: 4, name: 'ali reza', message: 'Thank you doctor', time: 'Yesterday', avatar: 'https://i.pravatar.cc/150?img=14' },
   ];
 
-  // ✅ استیت برای پیام‌ها (تا بتونیم پیام جدید اضافه کنیم)
+ 
   const [messages, setMessages] = useState([
     { id: 1, sender: 'ahmadi khan', text: 'Hi hope you feel better', time: '2:30', avatar: 'https://i.pravatar.cc/150?img=12', isMe: false },
     { id: 2, sender: 'ahmadi khan', text: 'Hi hope you feel better', time: '2:30', avatar: 'https://i.pravatar.cc/150?img=12', isMe: false },
@@ -26,28 +25,28 @@ const Chat = () => {
 
   const messagesEndRef = useRef(null);
 
-  // ✅ انتخاب اولین مخاطب در ابتدای لود
+ 
   useEffect(() => {
     if (contacts.length > 0 && !activeContact) {
       setActiveContact(contacts[1]); // ahmadi khan
     }
   }, []);
 
-  // ✅ اسکرول خودکار به آخرین پیام
+ 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // ✅ اعتبارسنجی جستجو (toLowerCase + trim)
+  
   const filteredContacts = contacts.filter((c) =>
     c.name.toLowerCase().trim().includes(searchTerm.toLowerCase().trim())
   );
 
-  // ✅ اعتبارسنجی ارسال پیام
+  
   const handleSend = (e) => {
     e.preventDefault();
     
-    // اگر پیام خالی بود یا فقط فاصله داشت، نفرست
+  
     if (!newMessage.trim()) return;
 
     const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -62,14 +61,14 @@ const Chat = () => {
     };
 
     setMessages([...messages, messageToAdd]);
-    setNewMessage(''); // پاک کردن ورودی
+    setNewMessage(''); 
   };
 
   return (
     <DashboardLayout title="Chat">
       <div className="grid grid-cols-1 md:grid-cols-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm overflow-hidden min-h-[calc(100vh-180px)] border border-slate-100 dark:border-slate-700">
 
-        {/* ================= بخش مخاطبین ================= */}
+       
         <aside className="md:col-span-1 border-r border-slate-100 dark:border-slate-700 flex flex-col">
           
           <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3">
@@ -97,7 +96,7 @@ const Chat = () => {
           </div>
 
           <div className="flex-1 overflow-y-auto">
-            {/* ✅ اعتبارسنجی: اگر مخاطبی پیدا نشد */}
+            
             {filteredContacts.length === 0 ? (
               <div className="p-6 text-center text-sm text-slate-500 flex flex-col items-center mt-10">
                 <AlertCircle className="w-8 h-8 text-slate-300 mb-2" />
@@ -107,7 +106,7 @@ const Chat = () => {
               filteredContacts.map((contact) => (
                 <button
                   key={contact.id}
-                  onClick={() => setActiveContact(contact)} // ✅ تغییر چت با کلیک
+                  onClick={() => setActiveContact(contact)} 
                   className={`w-full flex items-center gap-3 px-5 py-4 transition border-b border-slate-50 dark:border-slate-700 text-left ${
                     activeContact?.id === contact.id ? 'bg-purple-50 dark:bg-slate-700' : 'hover:bg-slate-50 dark:hover:bg-slate-700/50'
                   }`}
@@ -124,10 +123,10 @@ const Chat = () => {
           </div>
         </aside>
 
-        {/* ================= بخش چت ================= */}
+        
         <section className="md:col-span-2 flex flex-col">
           
-          {/* هدر چت فعال */}
+        
           {activeContact && (
             <div className="p-5 border-b border-slate-100 dark:border-slate-700 flex items-center gap-3 bg-white dark:bg-slate-800">
               <img src={activeContact.avatar} alt={activeContact.name} className="w-12 h-12 rounded-full object-cover" />
@@ -140,7 +139,7 @@ const Chat = () => {
             </div>
           )}
 
-          {/* پیام‌ها */}
+        
           <div className="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/50 dark:bg-slate-800/50">
             {messages.map((msg) => (
               <div key={msg.id} className={`flex items-start gap-3 ${msg.isMe ? 'flex-row-reverse' : ''}`}>
@@ -158,11 +157,11 @@ const Chat = () => {
                 <span className="text-xs text-slate-400 flex-shrink-0 mt-1">{msg.time}</span>
               </div>
             ))}
-            {/* نقطه برای اسکرول خودکار */}
+            
             <div ref={messagesEndRef} />
           </div>
 
-          {/* فرم ارسال */}
+         
           <form onSubmit={handleSend} className="p-4 border-t border-slate-100 dark:border-slate-700 flex items-center gap-3 bg-white dark:bg-slate-800">
             <button type="button" className="text-slate-400 hover:text-purple-500 transition p-2"><Smile className="w-5 h-5" /></button>
             <button type="button" className="text-slate-400 hover:text-purple-500 transition p-2"><Paperclip className="w-5 h-5" /></button>
@@ -175,7 +174,7 @@ const Chat = () => {
               className="flex-1 px-4 py-2.5 border border-slate-200 dark:border-slate-600 rounded-lg text-sm bg-transparent outline-none focus:border-purple-500 placeholder:text-slate-400 dark:text-white"
             />
 
-            {/* ✅ اعتبارسنجی: دکمه ارسال وقتی متن خالی است غیرفعال می‌شود */}
+           
             <button
               type="submit"
               disabled={!newMessage.trim()}

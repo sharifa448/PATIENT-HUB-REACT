@@ -35,7 +35,7 @@ const Sidebar = ({ isOpen, onClose, isMobile }) => {
   const showText = isOpen || isMobile;
 
   return (
-    // ✅ سایدبار در دارک مود آبی تیره (blue-900) می‌شه
+    
     <aside
       className={`
         bg-white dark:bg-blue-900 h-screen flex flex-col 

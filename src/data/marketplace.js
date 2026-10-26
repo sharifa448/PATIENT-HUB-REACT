@@ -34,7 +34,7 @@ export const foodItems = [
   },
 ];
 
-// دیتای جدول پایین صفحه
+
 export const tableData = [
   { id: 1, name: 'Healthy Diet', category: 'Food', serviceBy: 'Food panda', serviceLogo: 'https://upload.wikimedia.org/wikipedia/en/thumb/5/58/Foodpanda_logo.svg/200px-Foodpanda_logo.svg.png', discount: 0, price: 10, code: '243598234' },
   { id: 2, name: 'Healthy Diet', category: 'Food', serviceBy: 'Grab Food', serviceLogo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Grab_Logo.svg/200px-Grab_Logo.svg.png', discount: 5, price: 9, code: '877712' },

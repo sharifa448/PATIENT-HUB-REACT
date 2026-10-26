@@ -6,7 +6,7 @@ const MyDependents = () => {
   const [step, setStep] = useState(1);
 
   const [form, setForm] = useState({
-    // مرحله ۱
+    
     firstName: '',
     lastName: '',
     month: '',
@@ -14,11 +14,11 @@ const MyDependents = () => {
     year: '',
     relation: '',
     gender: '',
-    // مرحله ۲
+   
     bloodType: '',
     allergies: '',
     conditions: '',
-    // مرحله ۳ (طرح انتخابی)
+    
     selectedPlan: '',
   });
 
@@ -68,7 +68,7 @@ const MyDependents = () => {
     }
   };
 
-  // ✅ دیتای طرح‌ها برای مرحله ۳
+ 
   const plans = [
     {
       name: 'Standard Plan',
@@ -87,7 +87,7 @@ const MyDependents = () => {
   return (
     <DashboardLayout title="MyDependents">
       
-      {/* ================= عنوان اصلی ================= */}
+    
       <div className="text-center mb-12 mt-8">
         <h1 className="text-3xl font-bold text-slate-800 dark:text-white mb-3">
           Build Your Profile
@@ -97,7 +97,7 @@ const MyDependents = () => {
         </p>
       </div>
 
-      {/* ================= نوار پیشرفت ================= */}
+   
       <div className="flex items-start justify-center max-w-4xl mx-auto mb-12 px-4">
         <div className="flex flex-col items-center flex-shrink-0 w-32 md:w-40">
           <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-3 ${step > 1 ? 'bg-green-500 text-white' : step === 1 ? 'bg-slate-800 dark:bg-purple-600 text-white' : 'bg-slate-200 text-slate-400'}`}>
@@ -119,12 +119,11 @@ const MyDependents = () => {
         </div>
       </div>
 
-      {/* ================= کارت فرم ================= */}
       <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-8 md:p-12 max-w-5xl mx-auto">
         
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
 
-          {/* مرحله ۱ */}
+         
           {step === 1 && (
             <>
               <div className="text-center mb-4">
@@ -166,7 +165,7 @@ const MyDependents = () => {
             </>
           )}
 
-          {/* مرحله ۲ */}
+       
           {step === 2 && (
             <>
               <div className="text-center mb-4">
@@ -185,7 +184,7 @@ const MyDependents = () => {
             </>
           )}
 
-          {/* ================= مرحله ۳: انتخاب طرح (مطابق عکس) ================= */}
+         
           {step === 3 && (
             <>
               <div className="text-center mb-6">
@@ -228,7 +227,7 @@ const MyDependents = () => {
             </>
           )}
 
-          {/* ================= دکمه‌ها ================= */}
+         
           <div className="flex justify-between items-center pt-8 border-t border-slate-100 dark:border-slate-700 mt-8">
             {step > 1 ? (
               <button

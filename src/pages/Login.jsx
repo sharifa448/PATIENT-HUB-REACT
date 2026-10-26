@@ -16,7 +16,7 @@ const Login = () => {
     const { name, value, type, checked } = e.target;
     setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
     
-    // اگر خطایی وجود داشت، با تایپ کردن پاک بشه
+   
     if (errors[name]) {
       setErrors({ ...errors, [name]: '' });
     }
@@ -51,7 +51,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex flex-col relative font-sans">
       
-      {/* پس‌زمینه موجی */}
+      
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=80"
@@ -61,11 +61,10 @@ const Login = () => {
         <div className="absolute inset-0 bg-black/40"></div>
       </div>
 
-      {/* محتوای اصلی */}
+      
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-3 py-6 md:py-12">
         
-        {/* عنوان بالای صفحه */}
-        <div className="text-center mb-6 md:mb-8 text-white px-2">
+               <div className="text-center mb-6 md:mb-8 text-white px-2">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2 drop-shadow-lg">
             Welcome to MyPatientHUB!
           </h1>
@@ -74,14 +73,14 @@ const Login = () => {
           </p>
         </div>
 
-        {/* کارت لاگین */}
+     
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[400px] p-6 md:p-8">
           
           <h2 className="text-lg md:text-xl font-bold text-center text-slate-800 mb-5 md:mb-6">
             Sign in to MyPatientHUB
           </h2>
 
-          {/* دکمه‌های شبکه‌های اجتماعی */}
+         
           <div className="flex justify-center gap-3 md:gap-4 mb-5 md:mb-6">
             <button type="button" className="w-12 h-12 md:w-14 md:h-14 border border-slate-200 rounded-xl hover:bg-slate-50 flex items-center justify-center transition">
               <svg className="w-5 h-5 md:w-6 md:h-6" viewBox="0 0 24 24" fill="#1877F2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -99,7 +98,7 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
             
-            {/* فیلد ایمیل یا شماره */}
+           
             <div>
               <input
                 type="text"
@@ -114,7 +113,7 @@ const Login = () => {
               {errors.contact && <p className="text-red-500 text-[10px] md:text-xs mt-1">{errors.contact}</p>}
             </div>
 
-            {/* فیلد رمز عبور */}
+           
             <div>
               <input
                 type="password"
@@ -129,7 +128,7 @@ const Login = () => {
               {errors.password && <p className="text-red-500 text-[10px] md:text-xs mt-1">{errors.password}</p>}
             </div>
 
-            {/* فراموشی رمز و Remember me (در یک خط) */}
+           
             <div className="flex flex-row justify-between items-center text-xs text-slate-500 pt-1 w-full gap-2">
               <a href="#" className="hover:text-purple-500 transition whitespace-nowrap">
                 Forgot password?
@@ -146,7 +145,7 @@ const Login = () => {
               </label>
             </div>
 
-            {/* دکمه ورود */}
+           
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white font-bold py-2.5 md:py-3 rounded-lg shadow-md hover:opacity-90 transition text-sm md:text-base mt-2"
@@ -160,7 +159,6 @@ const Login = () => {
               <div className="flex-1 h-px bg-slate-200"></div>
             </div>
 
-            {/* دکمه ثبت‌نام (می‌رود به صفحه Register) */}
             <button
               type="button"
               onClick={() => navigate('/register')}
@@ -173,7 +171,7 @@ const Login = () => {
         </div>
       </div>
 
-      {/* فوتر */}
+     
       <div className="relative z-10 w-full bg-slate-50/90 py-4 md:py-6 mt-auto">
         <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs md:text-sm text-slate-500 mb-3 md:mb-4 px-2 text-center">
           <a href="#" className="hover:text-purple-500">Google Play Store</a>
