@@ -277,7 +277,7 @@ const Dashboard = () => {
           </div>
         </header>
 
-        {/* Summary cards */}
+        
         <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <StatCard
             title="Clinic Promotions"
@@ -312,7 +312,7 @@ const Dashboard = () => {
           />
         </div>
 
-        {/* Distribution panels */}
+        
         <div className="mb-8 grid grid-cols-1 gap-6 xl:grid-cols-2">
           <DistributionPanel
             title="Promotion by Clinics"
@@ -357,7 +357,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Footer */}
+        
         <footer className="flex flex-col gap-2 border-t border-slate-200 pt-5 text-xs text-slate-400 sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
           <p>
             © 2026 MyPatientHUB. Healthcare information in one place.
