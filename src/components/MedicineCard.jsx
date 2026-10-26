@@ -1,11 +1,11 @@
 import React from "react";
 
-// ✅ onBuyClick رو به عنوان پراپ دریافت می‌کنیم
+
 const MedicineCard = ({ data, onBuyClick }) => {
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-4 hover:shadow-md transition border border-slate-100 dark:border-slate-700">
 
-      {/* عکس دارو */}
+     
       <div className="bg-slate-50 dark:bg-slate-700 rounded-lg mb-4 flex items-center justify-center py-6 h-32">
         <img
           src={data.image}
@@ -14,7 +14,7 @@ const MedicineCard = ({ data, onBuyClick }) => {
         />
       </div>
 
-      {/* نام و قیمت */}
+      
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-slate-800 dark:text-white text-sm">
           {data.name}
@@ -24,7 +24,6 @@ const MedicineCard = ({ data, onBuyClick }) => {
         </span>
       </div>
 
-      {/* لوگو و نام داروخانه */}
       <div className="flex items-center gap-2 mb-2">
         <img
           src={data.logo}
@@ -36,12 +35,12 @@ const MedicineCard = ({ data, onBuyClick }) => {
         </h4>
       </div>
 
-      {/* توضیحات */}
+     
       <p className="text-xs text-slate-400 mb-4 line-clamp-2 min-h-[32px]">
         {data.description}
       </p>
 
-      {/* ✅ دکمه BUY NOW که حالا به تابع والد وصل شده */}
+      
       <button 
         onClick={() => onBuyClick(data)}
         className="w-full bg-gradient-to-r from-pink-500 to-purple-600 text-white text-xs font-bold py-2.5 rounded-md hover:opacity-90 transition"

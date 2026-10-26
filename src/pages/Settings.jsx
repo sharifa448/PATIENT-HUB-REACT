@@ -92,7 +92,7 @@ const Settings = () => {
     <DashboardLayout title="Settings">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-        {/* ================= سایدبار تنظیمات ================= */}
+      
         <aside className="lg:col-span-1">
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-3 sticky top-24">
             {menuItems.map((item) => {
@@ -116,10 +116,9 @@ const Settings = () => {
           </div>
         </aside>
 
-        {/* ================= محتوای اصلی ================= */}
         <div className="lg:col-span-3">
 
-          {/* ----------------- پروفایل ----------------- */}
+         
           {activeTab === 'profile' && (
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
               <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-6">Profile</h2>
@@ -149,7 +148,7 @@ const Settings = () => {
                     <span className="text-sm text-slate-600 dark:text-slate-400">
                       Switch to invisible
                     </span>
-                    {/* ✅ سوییچ واقعی */}
+                    
                     <button 
                       onClick={() => setIsInvisible(!isInvisible)}
                       className={`relative w-12 h-6 rounded-full transition-colors ${
@@ -166,7 +165,7 @@ const Settings = () => {
             </div>
           )}
 
-          {/* ----------------- اطلاعات پایه ----------------- */}
+         
           {activeTab === 'basic' && (
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
               <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-6">Basic Info</h2>
@@ -226,7 +225,7 @@ const Settings = () => {
             </div>
           )}
 
-          {/* ----------------- تغییر رمز ----------------- */}
+        
           {activeTab === 'password' && (
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
               <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-6">Change Password</h2>
@@ -266,7 +265,7 @@ const Settings = () => {
             </div>
           )}
 
-          {/* ----------------- 2FA ----------------- */}
+       
           {activeTab === '2fa' && (
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
               <div className="flex justify-between items-center mb-6">
@@ -299,7 +298,7 @@ const Settings = () => {
             </div>
           )}
 
-          {/* ----------------- Sessions ----------------- */}
+       
           {activeTab === 'sessions' && (
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
               <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Sessions</h2>
@@ -327,7 +326,7 @@ const Settings = () => {
             </div>
           )}
 
-          {/* ----------------- حذف حساب ----------------- */}
+          
           {activeTab === 'delete' && (
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 p-6">
               <h2 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Delete Account</h2>

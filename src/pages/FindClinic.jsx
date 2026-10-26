@@ -11,11 +11,9 @@ const FindClinic = () => {
   const [zipCode, setZipCode] = useState('');
   const [showValidation, setShowValidation] = useState(false);
   
-  // ✅ استیت برای موقعیت فعلی کاربر
   const [userLocation, setUserLocation] = useState(null);
   const [isLocating, setIsLocating] = useState(false);
 
-  // ✅ منطق جستجو با toLowerCase و trim
   const filteredClinics = clinicsData.filter((clinic) => {
     const term = searchTerm.toLowerCase().trim();
     const zip = zipCode.toLowerCase().trim();
@@ -35,11 +33,11 @@ const FindClinic = () => {
       setShowValidation(true);
     } else {
       setShowValidation(false);
-      // جستجو به صورت زنده (onChange) انجام می‌شود، این دکمه فقط برای تایید است
+      
     }
   };
 
-  // ✅ تابع پیدا کردن موقعیت فعلی (CURRENT)
+ 
   const handleCurrentLocation = () => {
     setIsLocating(true);
     if (navigator.geolocation) {
@@ -93,7 +91,7 @@ const FindClinic = () => {
             className="flex-1 px-4 py-3 rounded-lg text-sm text-gray-800 focus:outline-none"
           />
           
-          {/* ✅ دکمه CURRENT که موقعیت GPS را می‌گیرد */}
+          
           <button 
             onClick={handleCurrentLocation}
             disabled={isLocating}
@@ -192,7 +190,7 @@ const FindClinic = () => {
             </div>
           ) : (
             viewMode === 'map' ? (
-              // ✅ پاس دادن موقعیت کاربر به نقشه
+             
               <MapView clinics={filteredClinics} userLocation={userLocation} />
             ) : (
               filteredClinics.map((clinic) => (

@@ -5,35 +5,34 @@ import { ChevronRight, Check, User, Stethoscope, Building2 } from 'lucide-react'
 const Register = () => {
   const navigate = useNavigate();
   
-  // 1: ورود، 2: انتخاب نقش، 3: مشخصات
+
   const [step, setStep] = useState(1); 
   
-  // استیت‌های مرحله 1
+ 
   const [isEmailMode, setIsEmailMode] = useState(false);
   const [authData, setAuthData] = useState({ contact: '', password: '' });
   const [authErrors, setAuthErrors] = useState({});
   const [isSliderVerified, setIsSliderVerified] = useState(false);
 
-  // استیت‌های مرحله 2
   const [role, setRole] = useState(''); 
 
-  // استیت‌های مرحله 3 (اطلاعات تکمیلی)
+  
   const [profileData, setProfileData] = useState({
     firstName: '', lastName: '', address: '', birthMonth: '', birthDay: '', birthYear: '',
     bloodGroup: '', gender: '', specialty: '', clinicType: '', extraPhone: '', extraEmail: '', hospitalName: ''
   });
   const [profileErrors, setProfileErrors] = useState({});
 
-  // ================== دیتای تاریخ تولد ==================
+ 
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June', 
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
-  const days = Array.from({ length: 31 }, (_, i) => i + 1); // 1 تا 31
+  const days = Array.from({ length: 31 }, (_, i) => i + 1); 
   const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 100 }, (_, i) => currentYear - i); // 100 سال اخیر
+  const years = Array.from({ length: 100 }, (_, i) => currentYear - i);
 
-  // ================== توابع تغییرات ==================
+  
   const handleAuthChange = (e) => {
     setAuthData({ ...authData, [e.target.name]: e.target.value });
     if (authErrors[e.target.name]) setAuthErrors({ ...authErrors, [e.target.name]: '' });
@@ -51,7 +50,6 @@ const Register = () => {
     setIsSliderVerified(false);
   };
 
-  // ================== اعتبارسنجی‌ها (Validation) ==================
   const validateStep1 = () => {
     const newErrors = {};
     if (!authData.contact.trim()) {
@@ -117,7 +115,7 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // ================== سابمیت فرم‌ها ==================
+
   const handleStep1Submit = (e) => {
     e.preventDefault();
     if (validateStep1()) setStep(2);
@@ -138,7 +136,7 @@ const Register = () => {
   return (
     <div className="min-h-screen flex flex-col relative font-sans bg-slate-50">
       
-      {/* پس‌زمینه */}
+   
       <div className="absolute top-0 w-full h-[300px] z-0">
         <img src="https://images.unsplash.com/photo-1557683316-973673baf926?w=1600&q=80" alt="background" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-purple-900/30"></div>
@@ -146,7 +144,7 @@ const Register = () => {
 
       <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 pt-12 pb-20">
         
-        {/* ======================= مرحله ۱ ======================= */}
+       
         {step === 1 && (
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[400px] p-6 md:p-8 mt-12">
             <h2 className="text-xl font-bold text-center text-slate-800 mb-6">Register with</h2>
@@ -199,7 +197,6 @@ const Register = () => {
           </div>
         )}
 
-        {/* ======================= مرحله ۲ ======================= */}
         {step === 2 && (
           <div className="w-full max-w-3xl text-center mt-12">
             <h2 className="text-2xl font-bold text-white mb-8 drop-shadow-md">Register As..</h2>
@@ -220,7 +217,6 @@ const Register = () => {
           </div>
         )}
 
-        {/* ======================= مرحله ۳ ======================= */}
         {step === 3 && (
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-6 md:p-10 mt-8">
             <h2 className="text-2xl font-bold text-center text-slate-800 mb-2">
@@ -230,7 +226,7 @@ const Register = () => {
 
             <form onSubmit={handleFinalSubmit} className="space-y-5" noValidate>
               
-              {/* ✅ فرم بیمار و دکتر */}
+             
               {role !== 'hospital' && (
                 <>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -246,7 +242,7 @@ const Register = () => {
                     </div>
                   </div>
                   
-                  {/* تاریخ تولد با تمام ماه‌ها و روزها و سال‌ها */}
+                  
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-2">Birth Date</label>
                     <div className="grid grid-cols-3 gap-4">

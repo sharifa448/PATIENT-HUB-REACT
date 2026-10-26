@@ -27,14 +27,14 @@ const FindPharmacy = () => {
     }
   };
 
-  // ✅ تابع باز کردن پنجره خرید (هم برای کارت‌ها، هم برای جدول)
+  
   const handleBuyNow = (item) => {
     setSelectedItem(item);
     setPurchaseSuccess(false);
     setIsCheckoutOpen(true);
   };
 
-  // ✅ تابع تایید نهایی خرید
+
   const handleConfirmPurchase = () => {
     setPurchaseSuccess(true);
     setTimeout(() => {
@@ -174,17 +174,7 @@ const FindPharmacy = () => {
 
       </div>
 
-     
-      <div className="flex flex-col md:flex-row justify-between items-center gap-4 mt-8 text-xs text-gray-400">
-        <div>
-          © 2026, made with ❤️ by <strong className="text-gray-700">MyPiHUB</strong> for a better web.
-        </div>
-        <div className="flex gap-6">
-          <a href="#" className="hover:text-purple-500 transition">MyPatientHUB</a>
-          <a href="#" className="hover:text-purple-500 transition">About Us</a>
-          <a href="#" className="hover:text-purple-500 transition">Blog</a>
-        </div>
-      </div>
+ 
 
     </DashboardLayout>
   );

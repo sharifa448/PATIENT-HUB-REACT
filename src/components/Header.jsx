@@ -49,9 +49,9 @@ const Header = ({ title = "Dashboard", onMenuClick }) => {
     setIsSearchFocused(false);
   };
 
-  // ✅ تابع ساده برای دکمه زنگ
+ 
   const handleBellClick = () => {
-    // یک پیام ساده که نشون بده دکمه کار می‌کنه
+
     alert("You have no new notifications right now.");
   };
 
@@ -147,13 +147,13 @@ const Header = ({ title = "Dashboard", onMenuClick }) => {
           <Settings className="w-5 h-5" />
         </button>
 
-        {/* ✅ دکمه زنگ که حالا فقط یه پیام ساده نشون می‌ده */}
+        
         <button
           onClick={handleBellClick}
           className="relative text-slate-500 dark:text-slate-400 hover:text-purple-500 transition p-1"
         >
           <Bell className="w-5 h-5" />
-          {/* نقطه قرمز کوچیک روی زنگ */}
+        
           <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
         </button>
       </div>

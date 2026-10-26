@@ -167,12 +167,12 @@ const FindMarketPlace = () => {
 
       </div>
 
-      {/* ================= ✅ کارت خرید (Checkout Modal) ================= */}
+    
       {isCheckoutOpen && selectedFood && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
           <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-700">
             
-            {/* هدر مودال */}
+        
             <div className="flex justify-between items-center p-5 border-b border-slate-100 dark:border-slate-700">
               <h2 className="text-lg font-bold text-slate-800 dark:text-white">Checkout</h2>
               <button onClick={() => setIsCheckoutOpen(false)} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
@@ -180,17 +180,17 @@ const FindMarketPlace = () => {
               </button>
             </div>
 
-            {/* بدنه مودال */}
+           
             <div className="p-6">
               {purchaseSuccess ? (
-                // ✅ پیام موفقیت‌آمیز بودن خرید
+                
                 <div className="text-center py-8">
                   <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">Payment Successful!</h3>
                   <p className="text-slate-500 dark:text-slate-400">Your order for {selectedFood.name} has been placed.</p>
                 </div>
               ) : (
-                // ✅ فرم تایید خرید
+               
                 <>
                   <div className="flex items-center gap-4 mb-6 bg-slate-50 dark:bg-slate-700/50 p-4 rounded-xl">
                     <img src={selectedFood.image} alt={selectedFood.name} className="w-20 h-20 rounded-lg object-cover" />

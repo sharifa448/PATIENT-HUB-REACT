@@ -344,12 +344,12 @@ const BarChartCard = ({ data }) => {
   );
 };
 
-// ✅ این کامپوننت حالا منوی کشویی داره
+
 const AppointmentsListInner = ({ items }) => {
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRef = useRef(null);
 
-  // بستن منو وقتی بیرون کلیک می‌شه
+ 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -375,7 +375,7 @@ const AppointmentsListInner = ({ items }) => {
           </div>
           <p className="text-xs text-slate-500 dark:text-slate-400 text-right whitespace-pre-line flex-shrink-0">{apt.date}</p>
           
-          {/* دکمه سه نقطه با منو */}
+          
           <div className="relative" ref={openMenuId === apt.id ? menuRef : null}>
             <button onClick={() => toggleMenu(apt.id)} className="text-slate-400 p-1 hover:text-slate-600 dark:hover:text-slate-200 transition">
               <MoreVertical className="w-4 h-4" />

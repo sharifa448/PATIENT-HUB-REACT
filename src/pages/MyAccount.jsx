@@ -70,7 +70,7 @@ const MyAccount = () => {
           </div>
         </div>
 
-        {/* ============ ستون راست - Invoices ============ */}
+        
         <div className="lg:col-span-1 bg-white rounded-2xl shadow-sm p-6">
           <div className="flex justify-between items-center mb-6">
             <h3 className="font-bold text-slate-800">Invoices</h3>
